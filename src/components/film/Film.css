@@ -1,0 +1,33 @@
+.film {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+}
+
+.buttons {
+    display: flex;
+    margin: 25px 0;
+}
+
+.buttons button {
+    width: 83px;
+    height: 43px;
+    margin-right: 8px;
+}
+
+.footer-card {
+    width: 64px;
+    height: 89px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-right: 14px;
+}
+
+.footer-card img {
+    width: 100%;
+    object-fit: cover;
+}

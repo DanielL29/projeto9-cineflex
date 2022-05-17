@@ -4,3 +4,18 @@ body {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
+
+button {
+    outline: none;
+    border: none;
+    background-color: #E8833A;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(0.90);
+}
