@@ -1,0 +1,10 @@
+.page-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 120px;
+    margin-bottom: 53px;
+    font-size: 24px;
+    color: #293845;
+}
