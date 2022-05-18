@@ -99,3 +99,17 @@
     width: 225px;
     height: 42px;
 }
+
+@media screen and (max-width: 400px) {
+    .seats {
+        width: 90%;
+    }
+
+    .user-form input {
+        width: 100%;
+    }
+    
+    .seat {
+        margin-right: 5px;
+    }
+}
