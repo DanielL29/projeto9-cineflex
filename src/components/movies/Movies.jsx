@@ -19,7 +19,7 @@ export default function Movies() {
 
     useEffect(() => {
         getMovies()
-    }, [movies])
+    }, [])
 
     async function getMovies() {
         const moviesData = await axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies')

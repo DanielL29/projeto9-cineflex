@@ -40,8 +40,8 @@ export default function Film() {
                         <Schedule key={schedule.id} weekDay={schedule.weekday} date={schedule.date}>
                             {schedule.showtimes.map(hour => {
                                 return (
-                                    <Link to={`/sessao/${hour.id}`}>
-                                        <button key={hour.id}>{hour.name}</button>
+                                    <Link key={hour.id} to={`/sessao/${hour.id}`}>
+                                        <button>{hour.name}</button>
                                     </Link>
                                 )
                             })}
