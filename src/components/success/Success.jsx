@@ -1,10 +1,7 @@
-import { useState } from 'react'
 import './Success.css'
 
-export let order = {}
-
-export default function Success() {
-    // const [order, setOrder] = useState({})
+export default function Success({ order, setOrder }) {
+    console.log(order)
 
     return (
         <div className="success">sucesso</div>

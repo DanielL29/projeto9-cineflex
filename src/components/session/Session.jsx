@@ -1,104 +1,59 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import PageTitle from '../page-title/PageTitle'
 import './Session.css'
-import Footer from './../footer/Footer';
+import PageTitle from '../page-title/PageTitle';
+import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Footer from '../footer/Footer';
 
-function Seat({ number, status, id, ids, setIds }) {
-    const [color, setColor] = useState(false)
-    const selectSeat = color ? 'green' : ''
-
-    function getSeatId(id) {
-        setColor(!color)
-        setIds([...ids, id])
-    }
-
+function Schedule({ weekDay, date, children }) {
     return (
-        <div className={`seat ${!status ? 'yellow' : selectSeat}`} 
-            onClick={status ? () => getSeatId(id) : () => alert('Esse assento não está disponível')}>{number}</div>
+        <div className="schedule">
+            <h1>{weekDay} - {date}</h1>
+            <div className="buttons">
+                {children}
+            </div>
+        </div>
     )
 }
 
 export default function Session() {
     const { id } = useParams()
-    const [seats, setSeats] = useState([])
-    const [day, setDay] = useState({})
-    const [film, setFilm] = useState('')
-    const [name, setName] = useState('')
-    const [cpf, setCPF] = useState('')
-    const [ids, setIds] = useState([])
+    const [days, setDays] = useState([])
+    const [film, setFilm] = useState({})
 
     useEffect(() => {
-        getSeats()
+        getFilm()
     }, [])
 
-    async function getSeats() {
-        const seatsData = await axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${id}/seats`)
-        setSeats(seatsData.data.seats)
-        setDay(seatsData.data.day)
-        setFilm(seatsData.data.movie)
-    }
-
-    function sendOrder() {
-        let order = { ids, name, cpf }
-        console.log(order)
-        const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', order)
-        promise.then(res => console.log(res.data))
-        promise.catch(res => res.response.data)
+    async function getFilm() {
+        const filmData = await axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${id}/showtimes`)
+        setDays(filmData.data.days)
+        setFilm(filmData.data)
     }
 
     return (
-        <div className="session">
-            <PageTitle title="Selecione o(s) assento(s)" />
-            <div className="seats">
-                {seats.map(seat => {
+        <div className="film-sessions">
+            <PageTitle title="Selecione o horário" />
+            <div className="sessions">
+                {days.map(schedule => {
                     return (
-                        <Seat key={seat.id} 
-                            status={seat.isAvailable} 
-                            number={seat.name} 
-                            ids={ids} 
-                            setIds={setIds}
-                            id={seat.id}
-                        />
+                        <Schedule key={schedule.id} weekDay={schedule.weekday} date={schedule.date}>
+                            {schedule.showtimes.map(hour => {
+                                return (
+                                    <Link key={hour.id} to={`/assentos/${hour.id}`}>
+                                        <button>{hour.name}</button>
+                                    </Link>
+                                )
+                            })}
+                        </Schedule>
                     )
                 })}
             </div>
-            <div className="status">
-                <div>
-                    <div className="seat green"></div>
-                    <p>Selecionado</p>
-                </div>
-                <div>
-                    <div className="seat"></div>
-                    <p>Disponível</p>
-                </div>
-                <div>
-                    <div className="seat yellow"></div>
-                    <p>Indisponível</p>
-                </div>
-            </div>
-            <div className="user-form">
-                <div>
-                    <label>Nome do comprador:</label>
-                    <input type="text" placeholder="Digite seu nome..." value={name} onChange={(e) => setName(e.target.value)} />
-                </div>
-                <div>
-                    <label>CPF do comprador:</label>
-                    <input type="text" placeholder="Digite seu CPF..." value={cpf} onChange={(e) => setCPF(e.target.value)} />
-                </div>
-            </div>
-            <Link to="/sucesso">
-                <button className="send" onClick={sendOrder}>Reservar assento(s)</button>
-            </Link>
             <Footer>
                 <div className="footer-card">
                     <img src={film.posterURL} alt="film-footer" />
                 </div>
-                <div>
-                    <h2>{film.title}</h2>
-                    <h2>{day.weekday} - {day.date}</h2>
-                </div>
+                <h2>{film.title}</h2>
             </Footer>
         </div>
     )
