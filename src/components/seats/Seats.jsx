@@ -43,6 +43,7 @@ export default function Seats({ order, setOrder }) {
     function sendOrder() {
         let orderData = { ids, name, cpf }
         let counter = 0
+        ids.sort((a, b) => a - b)
         const getSeatsName = (seat) => {
             if(seat.id === ids[counter]) {
                 counter++
