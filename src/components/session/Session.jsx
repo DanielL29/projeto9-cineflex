@@ -16,13 +16,15 @@ function Schedule({ weekDay, date, children }) {
     )
 }
 
-export default function Session() {
+export default function Session({ setPreviousPath }) {
     const { id } = useParams()
     const [days, setDays] = useState([])
     const [film, setFilm] = useState({})
 
     useEffect(() => {
         getFilm()
+        setPreviousPath("/")
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     async function getFilm() {
@@ -40,7 +42,7 @@ export default function Session() {
                         <Schedule key={schedule.id} weekDay={schedule.weekday} date={schedule.date}>
                             {schedule.showtimes.map(hour => {
                                 return (
-                                    <Link key={hour.id} to={`/assentos/${hour.id}`}>
+                                    <Link key={hour.id} to={`/assentos/${hour.id}`} onClick={() => setPreviousPath(`/sessoes/${id}`)}>
                                         <button>{hour.name}</button>
                                     </Link>
                                 )

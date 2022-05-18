@@ -12,3 +12,11 @@
     color: #E8833A;
     font-size: 34px;
 }
+
+.header button {
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+    padding: 5px;
+    top: 25%;
+}

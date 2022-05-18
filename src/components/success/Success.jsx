@@ -2,7 +2,7 @@ import './Success.css'
 import PageTitle from './../page-title/PageTitle';
 import { Link } from 'react-router-dom';
 
-export default function Success({ order, setOrder }) {
+export default function Success({ order, setPreviousPath }) {
     const cpf = order.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
 
     return (
@@ -24,7 +24,7 @@ export default function Success({ order, setOrder }) {
                     <p>CPF: {cpf}</p>
                 </div>
             </div>
-            <Link to="/">
+            <Link to="/" onClick={() => setPreviousPath("/")}>
                 <button className="home">Voltar pra Home</button>
             </Link>
         </div>

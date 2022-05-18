@@ -20,17 +20,18 @@ function Seat({ number, status, id, ids, setIds }) {
     )
 }
 
-export default function Seats({ order, setOrder }) {
+export default function Seats({ order, setOrder, setPreviousPath }) {
     const { id } = useParams()
     const [seats, setSeats] = useState([])
     const [day, setDay] = useState({})
-    const [film, setFilm] = useState('')
+    const [film, setFilm] = useState({})
     const [name, setName] = useState('')
     const [cpf, setCPF] = useState('')
     const [ids, setIds] = useState([])
 
     useEffect(() => {
         getSeats()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     async function getSeats() {
@@ -38,6 +39,7 @@ export default function Seats({ order, setOrder }) {
         setSeats(seatsData.data.seats)
         setDay(seatsData.data.day)
         setFilm(seatsData.data.movie)
+        setPreviousPath(`/sessoes/${seatsData.data.movie.id}`)
     }
 
     function sendOrder() {
@@ -92,7 +94,7 @@ export default function Seats({ order, setOrder }) {
                     <p>Disponível</p>
                 </div>
                 <div>
-                    <div className="seat yellow"></div>
+                    <div className="seat yellow"></div> 
                     <p>Indisponível</p>
                 </div>
             </div>
@@ -106,7 +108,7 @@ export default function Seats({ order, setOrder }) {
                     <input type="text" placeholder="Digite seu CPF..." value={cpf} onChange={(e) => setCPF(e.target.value)} />
                 </div>
             </div>
-            <Link to="/sucesso">
+            <Link to="/sucesso" onClick={() => setPreviousPath(`/assentos/${id}`)}>
                 <button className="send" onClick={sendOrder}>Reservar assento(s)</button>
             </Link>
             <Footer>
