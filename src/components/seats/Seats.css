@@ -13,23 +13,6 @@
     width: 350px;
 }
 
-.seat {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 26px;
-    height: 26px;
-    background-color: #C3CFD9;
-    border: 1px solid #808F9D;
-    border-radius: 100%;
-    font-size: 11px;
-    color: #000;
-    margin-bottom: 18px;
-    margin-right: 7px;
-    cursor: pointer;
-}
-
 .status {
     display: flex;
     justify-content: space-between;
@@ -116,9 +99,5 @@
 
     .user-form input {
         width: 100%;
-    }
-    
-    .seat {
-        margin-right: 5px;
     }
 }
