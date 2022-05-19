@@ -1,4 +1,6 @@
-.header {
+import styled from 'styled-components'
+
+export const HeaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,12 +13,12 @@
     height: 67px;
     color: #E8833A;
     font-size: 34px;
-}
 
-.header button {
-    position: absolute;
-    left: 0;
-    margin-left: 10px;
-    padding: 5px;
-    top: 25%;
-}
+    button {
+        position: absolute;
+        left: 0;
+        margin-left: 10px;
+        padding: 5px;
+        top: 25%;
+    }
+`

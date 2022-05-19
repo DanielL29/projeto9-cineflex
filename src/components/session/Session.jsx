@@ -1,4 +1,4 @@
-import './Session.css'
+import { SessionContainer, Buttons, ScheduleCard } from './SessionStyle'
 import PageTitle from '../page-title/PageTitle';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -7,12 +7,12 @@ import Footer from '../footer/Footer';
 
 function Schedule({ weekDay, date, children }) {
     return (
-        <div className="schedule">
+        <ScheduleCard>
             <h1>{weekDay} - {date}</h1>
-            <div className="buttons">
+            <Buttons>
                 {children}
-            </div>
-        </div>
+            </Buttons>
+        </ScheduleCard>
     )
 }
 
@@ -34,29 +34,27 @@ export default function Session({ setPreviousPath }) {
     }
 
     return (
-        <div className="film-sessions">
+        <SessionContainer>
             <PageTitle title="Selecione o horário" />
-            <div className="sessions">
-                {days.map(schedule => {
-                    return (
-                        <Schedule key={schedule.id} weekDay={schedule.weekday} date={schedule.date}>
-                            {schedule.showtimes.map(hour => {
-                                return (
-                                    <Link key={hour.id} to={`/assentos/${hour.id}`} onClick={() => setPreviousPath(`/sessoes/${id}`)}>
-                                        <button>{hour.name}</button>
-                                    </Link>
-                                )
-                            })}
-                        </Schedule>
-                    )
-                })}
-            </div>
+            {days.map(schedule => {
+                return (
+                    <Schedule key={schedule.id} weekDay={schedule.weekday} date={schedule.date}>
+                        {schedule.showtimes.map(hour => {
+                            return (
+                                <Link key={hour.id} to={`/assentos/${hour.id}`} onClick={() => setPreviousPath(`/sessoes/${id}`)}>
+                                    <button>{hour.name}</button>
+                                </Link>
+                            )
+                        })}
+                    </Schedule>
+                )
+            })}
             <Footer>
                 <div className="footer-card">
                     <img src={film.posterURL} alt="film-footer" />
                 </div>
                 <h2>{film.title}</h2>
             </Footer>
-        </div>
+        </SessionContainer>
     )
 }

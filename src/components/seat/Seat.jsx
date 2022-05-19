@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import './Seat.css'
+import { SeatContainer } from './SeatStyle'
 
 export default function Seat({ number, status, id, buyers, setBuyers }) {
     const [color, setColor] = useState(false)
-    const selectSeat = color ? 'green' : ''
 
     function getSeatId(id) {
         if (color) {
@@ -24,7 +23,7 @@ export default function Seat({ number, status, id, buyers, setBuyers }) {
     }
 
     return (
-        <div className={`seat ${!status ? 'yellow' : selectSeat}`}
-            onClick={status ? () => getSeatId(id) : () => alert('Esse assento não está disponível')}>{number}</div>
+        <SeatContainer status={status} color={color}
+            onClick={status ? () => getSeatId(id) : () => alert('Esse assento não está disponível')}>{number}</SeatContainer>
     )
 }

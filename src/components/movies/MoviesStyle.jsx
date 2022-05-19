@@ -1,18 +1,20 @@
-.movies {
+import styled from 'styled-components'
+
+export const MoviesContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+`
 
-.available {
+export const Available = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 
     width: 100%;
-}
+`
 
-.available .card {
+export const CardContainer = styled.div`
     width: 145px;
     height: 209px;
     background-color: #fff;
@@ -23,14 +25,14 @@
     margin-bottom: 11px;
     cursor: pointer;
     transition: all 200ms ease-in-out;
-}
 
-.available .card:hover {
-    transform: scale(110%);
-}
+    &:hover {
+        transform: scale(110%);
+    }
 
-.available .card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+`

@@ -1,9 +1,9 @@
-import './PageTitle.css'
+import { PageTitleContainer } from './PageTitleStyle'
 
 export default function PageTitle({ title, color }) {
     return (
-        <div className="page-title" style={{ color, fontWeight: color ? 'bold' : 'normal' }}>
+        <PageTitleContainer color={color}>
             <h1>{title}</h1>
-        </div>
+        </PageTitleContainer>
     )
 }

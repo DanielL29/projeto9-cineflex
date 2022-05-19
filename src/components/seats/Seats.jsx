@@ -4,7 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import PageTitle from '../page-title/PageTitle'
 import Seat from '../seat/Seat'
 import UserFields from '../user-fields/UserFields'
-import './Seats.css'
+import { SeatContainer } from '../seat/SeatStyle'
+import { SeatsContainer, SeatsSection, Status, UserForm } from './SeatsStyle'
+import './SeatsStyle.jsx'
 import Footer from '../footer/Footer';
 
 export default function Seats({ order, setOrder, setPreviousPath }) {
@@ -84,39 +86,39 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
     }
 
     return (
-        <div className="session">
+        <SeatsContainer>
             <PageTitle title="Selecione o(s) assento(s)" />
-            <div className="seats">
+            <SeatsSection>
                 {seats.map(seat => {
                     return (
                         <Seat key={seat.id} 
                             status={seat.isAvailable} number={seat.name} id={seat.id} buyers={buyers} setBuyers={setBuyers} />
                     )
                 })}
-            </div>
-            <div className="status">
+            </SeatsSection>
+            <Status>
                 <div>
-                    <div className="seat green"></div>
+                    <SeatContainer green></SeatContainer>
                     <p>Selecionado</p>
                 </div>
                 <div>
-                    <div className="seat"></div>
+                    <SeatContainer></SeatContainer>
                     <p>Disponível</p>
                 </div>
                 <div>
-                    <div className="seat yellow"></div>
+                    <SeatContainer yellow></SeatContainer>
                     <p>Indisponível</p>
                 </div>
-            </div>
-            <div className="user-form">
+            </Status>
+            <UserForm>
                 {buyers.sort((a, b) => a.id - b.id).map(buyer => {
                     return (
                         <UserFields key={buyer.id} 
                             id={buyer.id} seats={seats} buyers={buyers} setBuyers={setBuyers} name={buyer.name} cpf={buyer.cpf} validate={validate} />
                     )
                 })}
-            </div>
-            <button className="send" onClick={sendOrder}>Reservar assento(s)</button>
+            </UserForm>
+            <button onClick={sendOrder}>Reservar assento(s)</button>
             <Footer>
                 <div className="footer-card">
                     <img src={film.posterURL} alt="film-footer" />
@@ -126,6 +128,6 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
                     <h2>{day.weekday} - {day.date}</h2>
                 </div>
             </Footer>
-        </div>
+        </SeatsContainer>
     )
 }

@@ -1,4 +1,4 @@
-import './Movies.css'
+import { MoviesContainer, Available, CardContainer } from './MoviesStyle.jsx'
 import PageTitle from './../page-title/PageTitle';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 function Card({ image, id }) {
     return (
         <Link to={`/sessoes/${id}`}>
-            <div className="card">
+            <CardContainer>
                 <img src={image} alt="film" />
-            </div>
+            </CardContainer>
         </Link>
     )
 }
@@ -27,15 +27,15 @@ export default function Movies() {
     }
 
     return (
-        <div className="movies">
+        <MoviesContainer>
             <PageTitle title="Selecione o Filme" />
-            <div className="available">
+            <Available>
                 {movies.map(film => {
                     return (
                         <Card key={film.id} image={film.posterURL} id={film.id} />
                     )
                 })}
-            </div>
-        </div>
+            </Available>
+        </MoviesContainer>
     )
 }

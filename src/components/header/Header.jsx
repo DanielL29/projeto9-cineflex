@@ -1,17 +1,17 @@
 import { Link, useLocation } from 'react-router-dom'
-import './Header.css'
+import { HeaderContainer } from './HeaderStyle'
 
 export default function Header({ previousPath }) {
     const location = useLocation()
 
     return (
-        <div className="header">
+        <HeaderContainer>
             {location.pathname === "/" ? "" : (
                 <Link to={previousPath}>
                     <button>Voltar</button>
                 </Link>
             )}
             <h1>CINEFLEX</h1>
-        </div>
+        </HeaderContainer>
     )
 }

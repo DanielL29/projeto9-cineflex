@@ -1,7 +1,9 @@
-import './Footer.css'
+import { FooterContainer } from './FooterStyle.jsx'
 
 export default function Footer({ children }) {
     return (
-        <div className="footer">{children}</div>
+        <FooterContainer>
+            {children}
+        </FooterContainer>
     )
 }
