@@ -67,7 +67,16 @@
     margin-bottom: 40px;
 }
 
-.user-form > div {
+.user-form h1 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.user-form p {
+    color: red;
+}
+
+.user-form > div, .user-form > div > div {
     display: flex;
     flex-direction: column;
     margin-bottom: 12px;

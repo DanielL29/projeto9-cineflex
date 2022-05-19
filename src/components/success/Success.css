@@ -26,12 +26,17 @@
     margin-bottom: 40px;
 }
 
+.success .info > div {
+    margin-bottom: 30px;
+}
+
 .home {
     width: 225px;
     height: 42px;
     color: #fff;
     font-weight: 400;
     margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 @media screen and (max-width: 500px) {
