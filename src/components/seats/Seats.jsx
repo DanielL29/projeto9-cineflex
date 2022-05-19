@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import PageTitle from '../page-title/PageTitle'
 import './Seats.css'
 import Footer from '../footer/Footer';
@@ -40,7 +40,7 @@ function Seat({ number, status, id, ids, setIds, buyer, setBuyer }) {
     )
 }
 
-function UserFields({ id, seats, buyer, setBuyer, validate }) {
+function UserFields({ id, seats, buyer, setBuyer, validate, setValidate }) {
     const [name, setName] = useState('')
     const [cpf, setCPF] = useState('')
     const cpfValid = cpf.length === 11
@@ -48,7 +48,7 @@ function UserFields({ id, seats, buyer, setBuyer, validate }) {
     const seatNumber = seats.find(seat => seat.id === id)
 
     useEffect(() => {
-        if (cpf !== "") {
+        if (cpf !== '') {
             getBuyer()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +78,7 @@ function UserFields({ id, seats, buyer, setBuyer, validate }) {
             <div>
                 <label>Nome do comprador:</label>
                 <input type="text" placeholder="Digite seu nome..." value={name} onChange={(e) => setName(e.target.value)} />
-                {name === "" && validate ? <p>Nome não informado</p> : ''}
+                {name === '' && validate ? <p>Nome não informado</p> : ''}
             </div>
             <div>
                 <label>CPF do comprador:</label>
@@ -97,6 +97,7 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
     const [ids, setIds] = useState([])
     const [buyer, setBuyer] = useState([])
     const [validate, setValidate] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         getSeats()
@@ -133,8 +134,10 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
                 date: day.date,
                 ids: idsName,
             })
+            setPreviousPath(`/assentos/${id}`)
 
             const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', orderData)
+            promise.then(() => navigate('/sucesso'))
             promise.catch(() => alert('Solicitação não enviada!'))
         }
     }
@@ -180,13 +183,12 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
                             buyer={buyer}
                             setBuyer={setBuyer}
                             validate={validate}
+                            setValidate={setValidate}
                         />
                     )
                 })}
             </div>
-            <Link to="/sucesso" onClick={() => setPreviousPath(`/assentos/${id}`)}>
-                <button className="send" onClick={sendOrder}>Reservar assento(s)</button>
-            </Link>
+            <button className="send" onClick={sendOrder}>Reservar assento(s)</button>
             <Footer>
                 <div className="footer-card">
                     <img src={film.posterURL} alt="film-footer" />
