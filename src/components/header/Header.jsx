@@ -1,8 +1,9 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { HeaderContainer } from './HeaderStyle'
 
 export default function Header({ previousPath }) {
     const location = useLocation()
+    const navigate = useNavigate()
 
     return (
         <HeaderContainer>
@@ -11,7 +12,7 @@ export default function Header({ previousPath }) {
                     <button>Voltar</button>
                 </Link>
             )}
-            <h1>CINEFLEX</h1>
+            <h1 onClick={() => navigate('/')}>CINEFLEX</h1>
         </HeaderContainer>
     )
 }

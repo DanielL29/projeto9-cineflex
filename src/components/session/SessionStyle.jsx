@@ -7,6 +7,12 @@ export const SessionContainer = styled.div`
     margin-bottom: 150px;
 `
 
+export const Loading = styled.div`
+    displaY: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 export const Buttons = styled.div`
     display: flex;
     margin: 25px 0;

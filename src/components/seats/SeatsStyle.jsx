@@ -18,6 +18,10 @@ export const SeatsSection = styled.div`
     flex-wrap: wrap;
     width: 350px;
 
+    img {
+        margin-left: 70px;
+    }
+
     @media screen and (max-width: 400px) {
         width: 95%;
     }

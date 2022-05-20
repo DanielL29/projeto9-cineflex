@@ -6,9 +6,9 @@ import Seat from '../seat/Seat'
 import UserFields from '../user-fields/UserFields'
 import { SeatContainer } from '../seat/SeatStyle'
 import { SeatsContainer, SeatsSection, Status, UserForm } from './SeatsStyle'
-import './SeatsStyle.jsx'
 import Footer from '../footer/Footer';
 import { sendOrder } from '../../functions/sendOrder'
+import loading from '../../assets/images/cineflex-loading.gif'
 
 export default function Seats({ order, setOrder, setPreviousPath }) {
     const { id } = useParams()
@@ -30,12 +30,14 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [buyers])
 
-    async function getSeats() {
-        const seatsData = await axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${id}/seats`)
-        setSeats(seatsData.data.seats)
-        setDay(seatsData.data.day)
-        setFilm(seatsData.data.movie)
-        setPreviousPath(`/sessoes/${seatsData.data.movie.id}`)
+    function getSeats() {
+        const seatsData = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${id}/seats`)
+        seatsData.then(res => {
+            setSeats(res.data.seats)
+            setDay(res.data.day)
+            setFilm(res.data.movie)
+            setPreviousPath(`/sessoes/${res.data.movie.id}`)
+        })
     }
 
     function validateBuyers() {
@@ -52,12 +54,12 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
         <SeatsContainer>
             <PageTitle title="Selecione o(s) assento(s)" />
             <SeatsSection>
-                {seats.map(seat => {
-                    return (
-                        <Seat key={seat.id} 
+                {seats.length === 0 ? <img src={loading} alt="cineflex-loading" /> : (
+                    seats.map(seat => {
+                        return <Seat key={seat.id} 
                             status={seat.isAvailable} number={seat.name} id={seat.id} buyers={buyers} setBuyers={setBuyers} />
-                    )
-                })}
+                    })
+                )}
             </SeatsSection>
             <Status>
                 <div>
@@ -75,10 +77,8 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
             </Status>
             <UserForm>
                 {buyers.sort((a, b) => a.id - b.id).map(buyer => {
-                    return (
-                        <UserFields key={buyer.id} 
-                            id={buyer.id} seats={seats} buyers={buyers} setBuyers={setBuyers} name={buyer.name} cpf={buyer.cpf} validate={validate} />
-                    )
+                    return <UserFields key={buyer.id} 
+                        id={buyer.id} seats={seats} buyers={buyers} setBuyers={setBuyers} name={buyer.name} cpf={buyer.cpf} validate={validate} />
                 })}
             </UserForm>
             <button onClick={() => sendOrder(id, buyers, seats, validateAllFields, order, film, day, axios, setValidate, setPreviousPath, setOrder, navigate)}>
@@ -86,7 +86,7 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
             </button>
             <Footer>
                 <div className="footer-card">
-                    <img src={film.posterURL} alt="film-footer" />
+                    {Object.keys(film).length === 0 ? <img src={loading} alt="cineflex-loading" /> : <img src={film.posterURL} alt="film-footer" />}
                 </div>
                 <div>
                     <h2>{film.title}</h2>

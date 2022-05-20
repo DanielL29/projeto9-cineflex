@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "./header/Header";
 import Router from "./Router";
-import { GlobalStyle } from '../assets/css/GlobalStyle'
+import { GlobalStyle } from '../assets/global/GlobalStyle'
 
 export default function App() {
     const [previousPath, setPreviousPath] = useState("/")

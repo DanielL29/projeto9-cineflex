@@ -3,6 +3,7 @@ import PageTitle from './../page-title/PageTitle';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import loading from '../../assets/images/cineflex-loading.gif'
 
 function Card({ image, id }) {
     return (
@@ -21,20 +22,24 @@ export default function Movies() {
         getMovies()
     }, [])
 
-    async function getMovies() {
-        const moviesData = await axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies')
-        setMovies(moviesData.data)
+    function getMovies() {
+        const moviesData = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies')
+        moviesData.then(res => setMovies(res.data))
     }
 
     return (
         <MoviesContainer>
             <PageTitle title="Selecione o Filme" />
             <Available>
-                {movies.map(film => {
-                    return (
-                        <Card key={film.id} image={film.posterURL} id={film.id} />
-                    )
-                })}
+                {movies.length === 0 ? (
+                    <img src={loading} alt="cineflex-loading" />
+                ) : (
+                    movies.map(film => {
+                        return (
+                            <Card key={film.id} image={film.posterURL} id={film.id} />
+                        )
+                    })
+                )}
             </Available>
         </MoviesContainer>
     )

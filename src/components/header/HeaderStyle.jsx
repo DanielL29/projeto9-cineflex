@@ -21,4 +21,20 @@ export const HeaderContainer = styled.div`
         padding: 5px;
         top: 25%;
     }
+
+    h1:hover {
+        cursor: pointer;
+        animation-name: grow;
+        animation-duration: 400ms;
+        animation-timing-function: linear;
+    }
+
+    @keyframes grow {
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
 `
