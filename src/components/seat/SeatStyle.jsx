@@ -13,8 +13,8 @@ function statusColor(status, color, background = false, green, yellow) {
             else return '#808F9D'
         }
     } else {
-        if(background) return !status ? '#FBE192' : color ? '#8DD7CF' : '#C3CFD9'
-        else return !status ? '#F7C52B' : color ? '#1AAE9E' : '#808F9D'
+        if(background) return !status ? '#FBE192' : color !== "false" ? '#8DD7CF' : '#C3CFD9'
+        else return !status ? '#F7C52B' : color !== "false" ? '#1AAE9E' : '#808F9D'
     }
 }
 

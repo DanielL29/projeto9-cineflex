@@ -8,6 +8,7 @@ import { SeatContainer } from '../seat/SeatStyle'
 import { SeatsContainer, SeatsSection, Status, UserForm } from './SeatsStyle'
 import './SeatsStyle.jsx'
 import Footer from '../footer/Footer';
+import { sendOrder } from '../../functions/sendOrder'
 
 export default function Seats({ order, setOrder, setPreviousPath }) {
     const { id } = useParams()
@@ -40,49 +41,11 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
     function validateBuyers() {
         let counterValidate = 0
         for(let i = 0; i < buyers.length; i++) {
-            if(buyers[i].name !== '' && buyers[i].cpf.length === 11) {
-                counterValidate++
-            }
+            if(buyers[i].name !== '' && buyers[i].cpf.length === 14) counterValidate++
         }
         
         if(buyers.length > 0 && counterValidate === buyers.length) setValidateAllFields(true)
         else setValidateAllFields(false)
-    }
-
-    function sendOrder() {
-        let counter = 0
-        setValidate(true)
-        if (buyers.length > 0 && validateAllFields) {
-            buyers.sort((a, b) => a.id - b.id)
-
-            const getSeatsName = seat => {
-                if(buyers[counter] !== undefined) {
-                    if(seat.id === buyers[counter].id) {
-                        counter++
-                        return seat.name
-                    }
-                }
-            }
-
-            const idsName = seats.map(getSeatsName).filter(name => name !== undefined).map((user, i) => {
-                return { idAssento: user, nome: buyers[i].name, cpf: buyers[i].cpf }
-            })
-            
-            const ids = buyers.map(user => user.id)
-            let orderData = { ids, compradores: idsName }
-            setOrder({
-                ...order,
-                title: film.title,
-                weekday: day.weekday,
-                date: day.date,
-                ids: idsName,
-            })
-            setPreviousPath(`/assentos/${id}`)
-
-            const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', orderData)
-            promise.then(() => navigate('/sucesso'))
-            promise.catch(() => alert('Solicitação não enviada!'))
-        }
     }
 
     return (
@@ -98,15 +61,15 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
             </SeatsSection>
             <Status>
                 <div>
-                    <SeatContainer green></SeatContainer>
+                    <SeatContainer green />
                     <p>Selecionado</p>
                 </div>
                 <div>
-                    <SeatContainer></SeatContainer>
+                    <SeatContainer />
                     <p>Disponível</p>
                 </div>
                 <div>
-                    <SeatContainer yellow></SeatContainer>
+                    <SeatContainer yellow />
                     <p>Indisponível</p>
                 </div>
             </Status>
@@ -118,7 +81,9 @@ export default function Seats({ order, setOrder, setPreviousPath }) {
                     )
                 })}
             </UserForm>
-            <button onClick={sendOrder}>Reservar assento(s)</button>
+            <button onClick={() => sendOrder(id, buyers, seats, validateAllFields, order, film, day, axios, setValidate, setPreviousPath, setOrder, navigate)}>
+                Reservar assento(s)
+            </button>
             <Footer>
                 <div className="footer-card">
                     <img src={film.posterURL} alt="film-footer" />

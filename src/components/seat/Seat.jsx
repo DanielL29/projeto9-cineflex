@@ -23,7 +23,7 @@ export default function Seat({ number, status, id, buyers, setBuyers }) {
     }
 
     return (
-        <SeatContainer status={status} color={color}
+        <SeatContainer status={status} color={color.toString()}
             onClick={status ? () => getSeatId(id) : () => alert('Esse assento não está disponível')}>{number}</SeatContainer>
     )
 }
